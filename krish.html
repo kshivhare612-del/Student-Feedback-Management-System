@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Feedback Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef4ff, #f8fbff);
+            color: #172033;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        header {
+            background: #102a43;
+            color: white;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: #7cc9ff;
+        }
+
+        .nav-text {
+            font-size: 0.95rem;
+            color: #dbeafe;
+            opacity: 0.95;
+        }
+
+        .hero {
+            padding: 60px 8% 40px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #102a43;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: #102a43;
+            margin-bottom: 18px;
+        }
+
+        h1 span {
+            color: #1d4ed8;
+        }
+
+        .description {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #334e68;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            margin-top: 24px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 45px;
+        }
+
+        .feature {
+            width: 220px;
+            background: white;
+            padding: 25px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(16, 42, 67, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .feature h3 {
+            color: #102a43;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #627d98;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        footer {
+            background: #102a43;
+            color: #dbeafe;
+            text-align: center;
+            padding: 18px;
+            font-size: 13px;
+        }
+
+        #feedbackPage header {
+            flex-direction: column;
+            text-align: center;
+            padding: 28px 8%;
+        }
+
+        #feedbackPage header h1 {
+            margin-bottom: 8px;
+        }
+
+        #feedbackPage header p {
+            color: #dbeafe;
+        }
+
+        .form-card {
+            width: 90%;
+            max-width: 750px;
+            margin: 45px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(16, 42, 67, 0.12);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-title h2 {
+            color: #102a43;
+            margin-bottom: 6px;
+        }
+
+        .form-title p {
+            color: #627d98;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #102a43;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #102a43;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #0f2138;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #102a43;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .success-box {
+            max-width: 700px;
+            margin: 60px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .success-box h2 {
+            color: #102a43;
+            margin-bottom: 20px;
+        }
+
+        .success-box p {
+            margin: 10px 0;
+            color: #334e68;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 34px;
+            }
+
+            .description {
+                font-size: 16px;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+
+            .nav-text {
+                display: none;
+            }
+
+            .form-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="homePage" class="page active">
+        <header>
+            <div class="logo">Student<span>Feedback</span></div>
+            <div class="nav-text">Student Feedback Management System</div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="badge">Student Feedback Portal</div>
+                <h1>Your Feedback <span>Matters</span></h1>
+                <p class="description">
+                    Help us improve the learning experience by sharing your valuable feedback about
+                    courses, subjects, and teachers.
+                </p>
+                <button class="btn" type="button" onclick="showPage('feedbackPage')">Give Feedback →</button>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">📝</div>
+                        <h3>Easy Feedback</h3>
+                        <p>Submit your feedback through a simple and user-friendly form.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Simple & Secure</h3>
+                        <p>Your feedback details are handled through the application.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📚</div>
+                        <h3>Better Learning</h3>
+                        <p>Feedback helps improve the overall learning experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>© 2026 Student Feedback Management System</footer>
+    </div>
+
+    <div id="feedbackPage" class="page">
+        <header>
+            <h1>Student Feedback Form</h1>
+            <p>Please share your honest feedback</p>
+        </header>
+
+        <div class="form-card">
+            <div class="form-title">
+                <h2>Feedback Form</h2>
+                <p>Help us improve your learning experience</p>
+            </div>
+
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="student_name">Student Name</label>
+                    <input type="text" id="student_name" name="student_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="roll_number">Roll Number</label>
+                    <input type="text" id="roll_number" name="roll_number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <input type="text" id="course" name="course" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="teacher">Teacher Name</label>
+                    <input type="text" id="teacher" name="teacher" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Feedback</label>
+                    <textarea id="comments" name="comments" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Feedback</button>
+            </form>
+
+            <a href="#" class="back-link" onclick="showPage('homePage'); return false;">← Back to Home</a>
+        </div>
+    </div>
+
+    <div id="successPage" class="page">
+        <div class="success-box">
+            <h2>Feedback Submitted Successfully</h2>
+            <p><strong>Name:</strong> <span id="successName"></span></p>
+            <p><strong>Roll Number:</strong> <span id="successRoll"></span></p>
+            <p><strong>Course:</strong> <span id="successCourse"></span></p>
+            <p><strong>Subject:</strong> <span id="successSubject"></span></p>
+            <p><strong>Teacher:</strong> <span id="successTeacher"></span></p>
+            <p><strong>Feedback:</strong> <span id="successComments"></span></p>
+            <button class="btn" type="button" onclick="showPage('feedbackPage')">Submit Another Feedback</button>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
+
+        document.getElementById('feedbackForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            document.getElementById('successName').textContent = formData.get('student_name');
+            document.getElementById('successRoll').textContent = formData.get('roll_number');
+            document.getElementById('successCourse').textContent = formData.get('course');
+            document.getElementById('successSubject').textContent = formData.get('subject');
+            document.getElementById('successTeacher').textContent = formData.get('teacher');
+            document.getElementById('successComments').textContent = formData.get('comments');
+
+            showPage('successPage');
+        });
+    </script>
+</body>
+
+</html>
